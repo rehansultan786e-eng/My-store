@@ -19,118 +19,118 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color
 .search-box input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; font-size: 14px; }
 .search-btn { background: #8bc34a; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-/* CATEGORY SECTION */
+/* CIRCULAR CATEGORIES */
 .cat-section { background: white; padding: 15px 10px; overflow-x: auto; white-space: nowrap; display: flex; gap: 15px; scrollbar-width: none; }
 .cat-item { display: inline-block; text-align: center; min-width: 75px; cursor: pointer; }
 .cat-circle { width: 60px; height: 60px; background: #f8f9fa; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: 0.3s; border: 1px solid #eee; }
-.cat-item span { font-size: 11px; font-weight: 600; color: #555; display: block; }
+.cat-item:hover .cat-circle { border-color: var(--primary); transform: scale(1.05); }
+.cat-item span { font-size: 11px; font-weight: 600; color: #555; display: block; overflow: hidden; text-overflow: ellipsis; }
 
 /* GRID & CARDS */
 .section-title { padding: 15px 20px 5px; font-size: 18px; font-weight: 700; color: #222; }
 .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 15px; }
 
-.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; display: flex; flex-direction: column; }
-.img-container { width: 100%; height: 170px; overflow: hidden; position: relative; }
-.card img { width: 100%; height: 100%; object-fit: cover; }
+.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; display: flex; flex-direction: column; }
+.img-container { width: 100%; height: 170px; overflow: hidden; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
 
-/* 2 LINE LIMIT FOR TEXT */
-.product-title { 
-    font-size: 13px; font-weight: 600; margin: 0; color: #444; line-height: 1.4;
+/* 2 LINE LIMIT FEATURE */
+.card h3 { 
+    font-size: 12px; font-weight: 600; margin: 0; color: #444; line-height: 1.4;
     display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; 
-    height: 36px;
+    height: 34px; 
 }
+.see-more-btn { color: var(--primary); font-size: 10px; font-weight: 700; cursor: pointer; margin-top: 4px; display: inline-block; }
 
-.see-more-text { color: var(--primary); font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 4px; display: inline-block; }
+.discount-badge { position: absolute; top: 8px; left: 8px; background: #ff4757; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 10; }
+.card-content { padding: 10px; flex-grow: 1; }
+.rating { color: var(--star); font-size: 10px; margin: 5px 0; }
+.price { color: #000; font-weight: 700; font-size: 16px; margin: 5px 0; }
+.stock-alert { color: #d63031; font-size: 9px; font-weight: 700; margin-bottom: 8px; }
+.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 8px; font-size: 11px; cursor: pointer; border-radius: 6px; font-weight: bold; }
 
-.card-content { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
-.price { color: #000; font-weight: 700; font-size: 16px; margin: 8px 0; }
-.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 10px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: auto; }
+/* PRODUCT DETAIL MODAL (Same as Privacy Modal Style) */
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); }
+.modal-content { background: white; margin: 10% auto; padding: 20px; border-radius: 12px; width: 85%; max-width: 450px; position: relative; animation: slideUp 0.3s ease; }
+@keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.close-btn { position: absolute; right: 15px; top: 10px; font-size: 24px; cursor: pointer; color: #888; }
+.modal-img { width: 100%; border-radius: 8px; margin-bottom: 15px; }
 
-/* MODAL STYLE (Product Details) */
-.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
-.modal-content { 
-    background: white; margin: 10% auto; padding: 25px; border-radius: 15px; 
-    width: 85%; max-width: 450px; position: relative; max-height: 80vh; overflow-y: auto; 
-    animation: zoomIn 0.3s ease;
-}
-@keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-.close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; cursor: pointer; color: #666; }
-.modal-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
-.modal-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #222; }
-.modal-desc { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 15px; }
-
-/* NOTIFICATION POPUP */
+/* NOTIFICATION & WHATSAPP */
 #order-notification { display: none; position: fixed; bottom: 30px; left: 20px; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; border-left: 5px solid var(--primary); max-width: 260px; }
-
 .whatsapp-float { position: fixed; bottom: 30px; right: 20px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2000; }
 footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; margin-top: 20px; }
+.footer-links a { color: #222; margin: 0 10px; text-decoration: none; font-weight: 600; cursor: pointer; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <div class="top-row">
-    <div class="store-name">SARISH KANWAL STORE</div>
+    <div class="store-name">SARISH KANWAL</div>
     <div style="font-size: 20px;">🛒</div>
   </div>
   <div style="display:flex; align-items:center;">
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search Product..." onkeyup="searchProduct()">
+        <input type="text" id="searchInput" placeholder="Search Product Name/Code..." onkeyup="searchProduct()">
     </div>
-    <button class="search-btn">Search</button>
+    <button class="search-btn" onclick="searchProduct()">Search</button>
   </div>
 </div>
 
 <div class="cat-section">
   <div class="cat-item" onclick="filterCategory('all')"><div class="cat-circle">🏠</div><span>All</span></div>
   <div class="cat-item" onclick="filterCategory('cosmetics')"><div class="cat-circle">💄</div><span>Cosmetics</span></div>
-  <div class="cat-item" onclick="filterCategory('clothes')"><div class="cat-circle">👗</div><span>Dresses</span></div>
-  <div class="cat-item" onclick="filterCategory('bags')"><div class="cat-circle">👜</div><span>Bags</span></div>
+  <div class="cat-item" onclick="filterCategory('clothes')"><div class="cat-circle">👗</div><span>Womens Unstich</span></div>
+  <div class="cat-item" onclick="filterCategory('men')"><div class="cat-circle">👕</div><span>Mens Unstich</span></div>
 </div>
 
-<div class="section-title">Latest Products</div>
+<div class="section-title">Best Delivery Products</div>
 
 <div class="container" id="productContainer">
   <div class="card" data-category="cosmetics">
-    <div class="img-container"><img src="zafranicosmetic.jpg" alt="creame"></div>
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="cos1.jpg" id="img1" alt="Lipstick"></div>
     <div class="card-content">
-      <h3 class="product-title">Organic Vitamin C Serum with 24K Gold Particles for Instant Glow and Anti-Aging Effects</h3>
-      <span class="see-more-text" onclick="showProductDetails('Organic Vitamin C Serum', 'cos1.jpg', 'Yeh serum aapki skin ko natural glow deta hai. Is mein Vitamin C aur 24K Gold particles hain jo skin ko jhuriyon se bachate hain aur rangat saaf karte hain. 100% Organic aur side-effects se pak.', '1,800')">See More...</span>
-      <p class="price">Rs. 1,800</p>
-      <button class="buy-btn" onclick="buyProduct('Serum - 1800')">ORDER NOW</button>
+      <h3 id="title1">Matte Waterproof Lipstick Set - High Quality Professional Makeup Kit for Daily Use</h3>
+      <span class="see-more-btn" onclick="openProductDetail('title1', 'img1', 'Yeh behtreen matte lipstick set hai jo sara din chalta hai. Water-proof hai aur skin friendly hai.', '950')">See more...</span>
+      <div class="rating">★★★★★ <span style="color:#999">(80 Sold)</span></div>
+      <p class="price">Rs. 950</p>
+      <div class="stock-alert">🔥 Selling Fast</div>
+      <button class="buy-btn" onclick="buyProduct('Lipstick Set - 950')">ORDER NOW</button>
     </div>
   </div>
 
   <div class="card" data-category="clothes">
-    <div class="img-container"><img src="dress1.jpg" alt="Lawn"></div>
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="dress1.jpg" id="img2" alt="Lawn"></div>
     <div class="card-content">
-      <h3 class="product-title">Luxury Embroidered 3-Piece Lawn Suit with Silk Dupatta and Heavy Patch Work</h3>
-      <span class="see-more-text" onclick="showProductDetails('Luxury Lawn Suit', 'dress1.jpg', 'Premium quality lawn suit. Is mein heavy embroidery hai aur silk dupatta saath hai. Party wear aur daily wear dono ke liye behtreen hai. Color ki full guarantee hai.', '3,500')">See More...</span>
-      <p class="price">Rs. 3,500</p>
-      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 3500')">ORDER NOW</button>
-    </div>
-  </div>
-  
-  </div>
-
-<div id="productModal" class="modal">
-  <div class="modal-content">
-    <span class="close-modal" onclick="closeProductModal()">&times;</span>
-    <img id="mImg" class="modal-img" src="">
-    <h2 id="mTitle" class="modal-title"></h2>
-    <p id="mDesc" class="modal-desc"></p>
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-        <span id="mPrice" style="font-size:20px; font-weight:700; color:var(--primary);"></span>
-        <button id="mBuyBtn" class="buy-btn" style="width:150px;">Buy on WhatsApp</button>
+      <h3 id="title2">Premium Lawn 3-Piece Suit - Luxury Embroidered Collection with Silk Dupatta</h3>
+      <span class="see-more-btn" onclick="openProductDetail('title2', 'img2', 'Luxury lawn fabric, embroidered front, digital print dupatta aur dyed trouser. Summer collection 2026.', '3,200')">See more...</span>
+      <div class="rating">★★★★★ <span style="color:#999">(210 Sold)</span></div>
+      <p class="price">Rs. 3,200</p>
+      <div class="stock-alert">🔥 Only 3 left!</div>
+      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 3200')">ORDER NOW</button>
     </div>
   </div>
 </div>
 
-<div id="order-notification">
-    <div style="display:flex; align-items:center; gap:10px;">
-        <div style="font-size: 25px;">🛍️</div>
-        <div id="notif-content" style="font-size: 11px;"></div>
-    </div>
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('productModal')">&times;</span>
+    <img id="modalImg" class="modal-img" src="">
+    <h2 id="modalTitle" style="font-size:18px; margin:10px 0;"></h2>
+    <p id="modalDesc" style="font-size:13px; color:#666; line-height:1.5;"></p>
+    <p id="modalPrice" style="font-size:20px; font-weight:bold; color:var(--primary);"></p>
+    <button class="buy-btn" id="modalBuyBtn" style="padding:12px; font-size:14px;">BUY ON WHATSAPP</button>
+  </div>
+</div>
+
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal('infoModal')">&times;</span>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
 <a href="https://wa.me/923195624640" class="whatsapp-float" target="_blank">
@@ -138,39 +138,41 @@ footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12
 </a>
 
 <footer>
-  <div style="margin-bottom:15px;">
-    <a onclick="openInfo('privacy')" style="cursor:pointer; margin:0 10px;">Privacy Policy</a>
-    <a onclick="openInfo('contact')" style="cursor:pointer; margin:0 10px;">Contact Us</a>
+  <div class="footer-links">
+    <a onclick="openInfo('privacy')">Privacy</a>
+    <a onclick="openInfo('contact')">Contact</a>
   </div>
-  <p>&copy; 2026 SARISH KANWAL Store | Rahim Yar Khan</p>
+  <p>&copy; 2026 SARISH KANWAL Store | Pakistan, Punjab, Rahim Yar Khan</p>
 </footer>
 
 <script>
-// --- SHOW PRODUCT DETAILS MODAL ---
-function showProductDetails(title, img, desc, price) {
-    document.getElementById('mTitle').innerText = title;
-    document.getElementById('mImg').src = img;
-    document.getElementById('mDesc').innerText = desc;
-    document.getElementById('mPrice').innerText = "Rs. " + price;
-    document.getElementById('mBuyBtn').onclick = function() { buyProduct(title + " - " + price); };
+function openProductDetail(titleId, imgId, desc, price) {
+    document.getElementById('modalTitle').innerText = document.getElementById(titleId).innerText;
+    document.getElementById('modalImg').src = document.getElementById(imgId).src;
+    document.getElementById('modalDesc').innerText = desc;
+    document.getElementById('modalPrice').innerText = "Rs. " + price;
+    document.getElementById('modalBuyBtn').onclick = function() { buyProduct(document.getElementById(titleId).innerText + " - " + price); };
     document.getElementById('productModal').style.display = "block";
 }
 
-function closeProductModal() {
-    document.getElementById('productModal').style.display = "none";
+function openInfo(t) {
+    const b = document.getElementById('modalBody');
+    if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Aapka data Sarish Kanwal Store par mukammal mehfooz hai.</p>";
+    else b.innerHTML="<h2>Contact</h2><p>WhatsApp: 03195624640<br>Location: Rahim Yar Khan, Punjab</p>";
+    document.getElementById('infoModal').style.display="block";
 }
 
-// Close modal when clicking outside
+function closeModal(id) { document.getElementById(id).style.display = "none"; }
+
 window.onclick = function(event) {
-    let modal = document.getElementById('productModal');
-    if (event.target == modal) { modal.style.display = "none"; }
+    if (event.target.className === 'modal') { event.target.style.display = "none"; }
 }
 
 function searchProduct() {
     let input = document.getElementById('searchInput').value.toLowerCase().trim();
     let cards = document.getElementsByClassName('card');
     for (let i = 0; i < cards.length; i++) {
-        let title = cards[i].querySelector('.product-title').innerText.toLowerCase();
+        let title = cards[i].querySelector('h3').innerText.toLowerCase();
         cards[i].style.display = (title.includes(input) || input === "") ? "" : "none";
     }
 }
@@ -184,24 +186,6 @@ function filterCategory(cat) {
 }
 
 function buyProduct(p) { window.open(`https://wa.me/923195624640?text=I want to order: ${p}`, "_blank"); }
-
-function openInfo(type) {
-    if(type=='privacy') alert("Privacy Policy: Hum aapka data save nahi karte.");
-    else alert("Contact: 03195624640 | Rahim Yar Khan");
-}
-
-// --- DYNAMIC NOTIFICATIONS ---
-const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "Ali", "Ayesha"];
-function showNotification() {
-    const n = document.getElementById('order-notification');
-    const c = document.getElementById('notif-content');
-    const name = fNames[Math.floor(Math.random()*fNames.length)];
-    c.innerHTML = `<b>${name}</b> just placed an order!`;
-    n.style.display = "block";
-    setTimeout(() => { n.style.display = "none"; }, 4000);
-    setTimeout(showNotification, 20000);
-}
-setTimeout(showNotification, 5000);
 </script>
 
 </body>
