@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SARISH KANWAL Store</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary-color: #e91e63; 
+  --secondary-color: #1a9cb0;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #f4f4f4;
+  color: #333;
+}
+
+/* TOP BAR */
+.top-bar {
+  background: #222;
+  color: white;
+  font-size: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 20px;
+  text-transform: uppercase;
+}
+
+/* HEADER */
+.header {
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #e2e2e2;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.store-name {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  cursor: pointer;
+}
+
+.search-box {
+  flex: 1;
+  margin: 0 15px;
+  display: flex;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+  font-size: 13px;
+}
+
+.search-box button {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 0 15px;
+  cursor: pointer;
+  font-weight: bold;
+  border-radius: 0 4px 4px 0;
+}
+
+/* CATEGORY NAV */
+.nav {
+  background: #fff;
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+  font-size: 13px;
+  border-bottom: 1px solid #eee;
+  overflow-x: auto;
+}
+
+.nav a {
+  text-decoration: none;
+  color: #444;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 3px;
+  white-space: nowrap;
+}
+
+.nav a.active {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* CONTAINER - GRID SIZE UPDATED */
+.container {
+  display: grid;
+  /* Cards ki width 180px set kar di hai */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  padding: 15px;
+}
+
+/* CARD UI - HEIGHT ADJUSTED */
+.card {
+  background: white;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.card img {
+  width: 100%;
+  height: 180px; /* Image height choti kar di */
+  object-fit: cover;
+}
+
+.card-content {
+  padding: 10px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.card h3 {
+  font-size: 13px; /* Font chota kiya */
+  font-weight: 600;
+  margin: 0 0 5px 0;
+  height: 36px;
+  overflow: hidden;
+  color: #222;
+}
+
+.price {
+  color: var(--primary-color);
+  font-weight: 700;
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+.details {
+  font-size: 11px;
+  color: #666;
+  margin-bottom: 5px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-height: 1.3;
+}
+
+.details.expanded {
+  display: block;
+  -webkit-line-clamp: initial;
+}
+
+.see-more {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.delivery {
+  font-size: 10px;
+  color: #2ab52a;
+  font-weight: bold;
+  margin-top: auto;
+}
+
+.buy-btn {
+  width: 100%;
+  border: none;
+  background: var(--primary-color);
+  color: white;
+  padding: 8px;
+  margin-top: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+/* CATEGORY HEADER */
+.category-info {
+  padding: 15px 20px;
+  background: white;
+  margin: 10px 15px;
+  display: none;
+  border-left: 4px solid var(--primary-color);
+  border-radius: 4px;
+}
+
+.category-info h2 { font-size: 18px; margin: 0; }
+
+@keyframes slideUp {
+  from { transform: translateY(100px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <span>Helpline: 03195624640</span>
+  <span>🔥 FREE DELIVERY ON ALL ORDERS (LIMITED TIME OFFER!)</span>
+</div>
+
+<div class="header">
+  <div class="store-name" onclick="filterCategory('all')">SARISH KANWAL</div>
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="Search product..." onkeyup="searchProduct()">
+    <button onclick="searchProduct()">Search</button>
+  </div>
+</div>
+
+<div class="nav">
+  <a onclick="filterCategory('all')" class="active">All</a>
+  <a onclick="filterCategory('clothes')">Clothes</a>
+  <a onclick="filterCategory('shoes')">Shoes</a>
+  <a onclick="filterCategory('cosmetics')">Cosmetics</a>
+  <a onclick="filterCategory('bags')">Bags</a>
+</div>
+
+<div id="categoryHeader" class="category-info">
+  <h2 id="catTitle">Category Title</h2>
+</div>
+
+<div class="container" id="productContainer">
+  <div class="card" data-category="clothes">
+    <img src="product1.jpg" alt="Suit">
+    <div class="card-content">
+      <h3>Lawn Unstitched 3-Piece Suit</h3>
+      <p class="price">Rs. 2,999</p>
+      <div class="details">Summer collection with premium embroidery and matching dupatta.</div>
+      <button class="see-more" onclick="toggleDetails(this)">See More</button>
+      <p class="delivery">Free Home Delivery</p>
+      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 2999')">Buy Now</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="cosmetics">
+    <img src="product2.jpg" alt="Serum">
+    <div class="card-content">
+      <h3>Glow Whitening Serum</h3>
+      <p class="price">Rs. 1,250</p>
+      <div class="details">Fast results whitening serum for all skin types.</div>
+      <button class="see-more" onclick="toggleDetails(this)">See More</button>
+      <p class="delivery">Free Home Delivery</p>
+      <button class="buy-btn" onclick="buyProduct('Glow Serum - 1250')">Buy Now</button>
+    </div>
+  </div>
+</div>
+
+<div id="order-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 9999; border-left: 4px solid #e91e63; max-width: 250px; animation: slideUp 0.5s ease;">
+    <div style="display: flex; align-items: center; gap: 10px;">
+        <div style="font-size: 20px;">🛍️</div>
+        <div>
+            <p id="notif-text" style="margin: 0; font-size: 12px; color: #333;"></p>
+            <small style="color: #999; font-size: 10px;">Just now</small>
+        </div>
+    </div>
+</div>
+
+<script>
+// Fuzzy Search Logic
+function getEditDistance(a, b) {
+  if (a.length === 0) return b.length;
+  if (b.length === 0) return a.length;
+  var matrix = [];
+  for (var i = 0; i <= b.length; i++) matrix[i] = [i];
+  for (var j = 0; j <= a.length; j++) matrix[0][j] = j;
+  for (i = 1; i <= b.length; i++) {
+    for (j = 1; j <= a.length; j++) {
+      if (b.charAt(i - 1) == a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
+      else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
+    }
+  }
+  return matrix[b.length][a.length];
+}
+
+function searchProduct() {
+  let input = document.getElementById('searchInput').value.toLowerCase().trim();
+  let cards = document.getElementsByClassName('card');
+  for (let i = 0; i < cards.length; i++) {
+    let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+    let isMatch = (input === "" || title.includes(input));
+    if (!isMatch && input.length > 2) {
+      let words = title.split(" ");
+      words.forEach(word => { if (getEditDistance(input, word) <= 2) isMatch = true; });
+    }
+    cards[i].style.display = isMatch ? "" : "none";
+  }
+}
+
+function filterCategory(cat) {
+  let cards = document.getElementsByClassName('card');
+  let header = document.getElementById('categoryHeader');
+  document.getElementById('catTitle').innerText = cat.toUpperCase() + " COLLECTION";
+  header.style.display = (cat === 'all') ? "none" : "block";
+  for (let i = 0; i < cards.length; i++) {
+    let cardCat = cards[i].getAttribute('data-category');
+    cards[i].style.display = (cat === 'all' || cardCat === cat) ? "" : "none";
+  }
+}
+
+function toggleDetails(btn) {
+  const details = btn.previousElementSibling;
+  details.classList.toggle('expanded');
+  btn.innerText = details.classList.contains('expanded') ? "See Less" : "See More";
+}
+
+function buyProduct(product) {
+  window.open(`https://wa.me/923195624640?text=${encodeURIComponent('Assalam-o-Alaikum, I want to order: ' + product)}`, "_blank");
+}
+
+// Notifications
+const names = ["Ayesha", "Sana", "Fatima", "Zainab", "Hina", "Mariam", "Saba"];
+const cities = ["Lahore", "Karachi", "Islamabad", "Faisalabad", "Multan"];
+const productsNotif = ["Whitening Serum", "Lawn Suit", "Fancy Shoes", "Leather Bag"];
+
+function showNotification() {
+  const notif = document.getElementById('order-notification');
+  const text = document.getElementById('notif-text');
+  const rName = names[Math.floor(Math.random() * names.length)];
+  const rCity = cities[Math.floor(Math.random() * cities.length)];
+  const rProduct = productsNotif[Math.floor(Math.random() * productsNotif.length)];
+  text.innerHTML = `<b>${rName}</b> from <b>${rCity}</b> just bought <b>${rProduct}!</b>`;
+  notif.style.display = "block";
+  setTimeout(() => { notif.style.display = "none"; }, 5000);
+  setTimeout(showNotification, Math.floor(Math.random() * (25000 - 15000) + 15000));
+}
+setTimeout(showNotification, 5000);
+</script>
+
+</body>
+</html>
