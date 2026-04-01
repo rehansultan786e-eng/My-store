@@ -7,119 +7,209 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@900&display=swap" rel="stylesheet">
 
 <style>
-:root { --primary: #e91e63; --whatsapp: #25d366; --bg: #f8f9fa; --star: #f1c40f; }
-body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+:root { --primary: #e91e63; --whatsapp: #25d366; --bg: #f4f7f6; --star: #f1c40f; }
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: #333; }
 
-/* HEADER & NAV */
-.top-bar { background: #222; color: white; font-size: 10px; display: flex; justify-content: space-between; padding: 8px 20px; }
-.header { background: white; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-.store-name { font-family: 'Roboto', sans-serif; font-size: 26px; font-weight: 900; color: var(--primary); text-transform: uppercase; cursor: pointer; letter-spacing: -1px; }
-.search-box { flex: 1; margin: 0 20px; display: flex; }
-.search-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px 0 0 6px; outline: none; }
-.search-box button { background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer; border-radius: 0 6px 6px 0; font-weight: bold; }
-.nav { background: #fff; padding: 12px 20px; display: flex; gap: 25px; font-size: 14px; border-bottom: 1px solid #eee; overflow-x: auto; }
-.nav a { text-decoration: none; color: #555; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.3s; }
-.nav a.active, .nav a:hover { color: var(--primary); }
+/* HEADER & SEARCH */
+.header { background: white; padding: 15px 20px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+.top-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.store-name { font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: 900; color: var(--primary); text-transform: uppercase; }
+
+.search-box { display: flex; background: #f0f2f5; border-radius: 8px; padding: 5px 10px; flex: 1; margin: 0 10px; }
+.search-box input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; font-size: 14px; }
+.search-btn { background: #8bc34a; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+
+/* CIRCULAR CATEGORIES (Like Screenshot) */
+.cat-section { background: white; padding: 15px 10px; overflow-x: auto; white-space: nowrap; display: flex; gap: 15px; scrollbar-width: none; }
+.cat-item { display: inline-block; text-align: center; min-width: 75px; cursor: pointer; }
+.cat-circle { width: 60px; height: 60px; background: #f8f9fa; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: 0.3s; border: 1px solid #eee; }
+.cat-item:hover .cat-circle { border-color: var(--primary); transform: scale(1.05); }
+.cat-item span { font-size: 11px; font-weight: 600; color: #555; display: block; overflow: hidden; text-overflow: ellipsis; }
 
 /* GRID & CARDS */
-.container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 20px; flex: 1; }
-.card { background: white; border-radius: 10px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; display: flex; flex-direction: column; }
-.card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
+.section-title { padding: 15px 20px 5px; font-size: 18px; font-weight: 700; color: #222; }
+.container { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 15px; }
 
-/* Image & Zoom */
-.img-container { width: 100%; height: 180px; overflow: hidden; position: relative; }
-.card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
+.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; display: flex; flex-direction: column; }
+.img-container { width: 100%; height: 170px; overflow: hidden; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
 .card:hover img { transform: scale(1.1); }
 
-/* Discount Badge */
 .discount-badge { position: absolute; top: 8px; left: 8px; background: #ff4757; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 10; }
 
-.card-content { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
-.card h3 { font-size: 13px; font-weight: 600; margin: 0; height: 36px; overflow: hidden; line-height: 1.4; color: #222; }
+.card-content { padding: 10px; flex-grow: 1; }
+.card h3 { font-size: 12px; font-weight: 600; margin: 0; height: 34px; overflow: hidden; line-height: 1.4; color: #444; }
+.rating { color: var(--star); font-size: 10px; margin: 5px 0; }
+.price { color: #000; font-weight: 700; font-size: 16px; margin: 5px 0; }
+.stock-alert { color: #d63031; font-size: 9px; font-weight: 700; margin-bottom: 8px; }
 
-/* Stars & Rating */
-.rating { color: var(--star); font-size: 11px; margin: 6px 0; }
-.sold-count { color: #888; font-size: 10px; margin-left: 4px; }
-
-.price { color: var(--primary); font-weight: 700; font-size: 17px; margin: 5px 0; }
-.old-price { font-size: 12px; color: #aaa; text-decoration: line-through; margin-left: 4px; }
-
-/* Low Stock Alert */
-.stock-alert { color: #d63031; font-size: 10px; font-weight: 700; margin: 5px 0; }
-.stock-bar { width: 100%; height: 4px; background: #eee; border-radius: 2px; margin-bottom: 10px; overflow: hidden; }
-.stock-fill { width: 35%; height: 100%; background: #d63031; }
-
-.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 10px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: auto; }
+.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 8px; font-size: 11px; cursor: pointer; border-radius: 6px; font-weight: bold; }
 
 /* NOTIFICATION POPUP */
-#order-notification {
-    display: none; position: fixed; bottom: 30px; left: 20px; 
-    background: white; padding: 12px 18px; border-radius: 12px; 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; 
-    border-left: 6px solid var(--primary); max-width: 280px;
-    animation: slideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-.notif-flex { display: flex; align-items: center; gap: 12px; }
-.notif-icon { background: #fff0f5; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
-.notif-text { font-size: 11px; color: #444; line-height: 1.4; }
+#order-notification { display: none; position: fixed; bottom: 30px; left: 20px; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; border-left: 5px solid var(--primary); max-width: 260px; animation: slideIn 0.5s ease-out; }
+.notif-flex { display: flex; align-items: center; gap: 10px; }
+@keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
 
-/* FOOTER */
-footer { background: #1a1a1a; color: #999; padding: 30px 20px; text-align: center; font-size: 12px; margin-top: 40px; }
-.footer-links a { color: white; margin: 0 10px; text-decoration: none; cursor: pointer; }
-
-/* MODAL */
-.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
-.modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 12px; width: 80%; max-width: 450px; position: relative; }
-
-@keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-
-.whatsapp-float { position: fixed; bottom: 30px; right: 25px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000; transition: 0.3s; }
+/* WHATSAPP & FOOTER */
+.whatsapp-float { position: fixed; bottom: 30px; right: 20px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 2000; }
+footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; margin-top: 20px; }
+.footer-links a { color: #222; margin: 0 10px; text-decoration: none; font-weight: 600; }
 </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <span>📞 03195624640</span>
-  <span>🚚 FREE DELIVERY ON ALL ORDERS</span>
-</div>
-
 <div class="header">
-  <div class="store-name" onclick="filterCategory('all')">SARISH KANWAL</div>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchProduct()">
-    <button onclick="searchProduct()">Search</button>
+  <div class="top-row">
+    <div class="store-name">SARISH KANWAL</div>
+    <div style="font-size: 20px;">🛒</div>
+  </div>
+  <div style="display:flex; align-items:center;">
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Search Product Name/Code..." onkeyup="searchProduct()">
+    </div>
+    <button class="search-btn" onclick="searchProduct()">Search</button>
   </div>
 </div>
 
-<div class="nav">
-  <a onclick="filterCategory('all')" class="active">All</a>
-  <a onclick="filterCategory('clothes')">Clothes</a>
-  <a onclick="filterCategory('shoes')">Shoes</a>
-  <a onclick="filterCategory('cosmetics')">Cosmetics</a>
+<div class="cat-section">
+  <div class="cat-item" onclick="filterCategory('all')"><div class="cat-circle">🏠</div><span>All</span></div>
+  <div class="cat-item" onclick="filterCategory('cosmetics')"><div class="cat-circle">💄</div><span>Cosmetics</span></div>
+  <div class="cat-item" onclick="filterCategory('clothes')"><div class="cat-circle">👗</div><span>Womens Unstich</span></div>
+  <div class="cat-item" onclick="filterCategory('men')"><div class="cat-circle">👕</div><span>Mens Unstich</span></div>
+  <div class="cat-item" onclick="filterCategory('kids')"><div class="cat-circle">👶</div><span>Kids Clothing</span></div>
+  <div class="cat-item" onclick="filterCategory('bags')"><div class="cat-circle">👜</div><span>Handbags</span></div>
+  <div class="cat-item" onclick="filterCategory('jewellery')"><div class="cat-circle">💍</div><span>Jewellery</span></div>
+  <div class="cat-item" onclick="filterCategory('kitchen')"><div class="cat-circle">🍳</div><span>Kitchenware</span></div>
 </div>
 
+<div class="section-title">Best Delivery Products</div>
+
 <div class="container" id="productContainer">
+  <div class="card" data-category="cosmetics">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="cos1.jpg" alt="Lipstick"></div>
+    <div class="card-content">
+      <h3>Matte Waterproof Lipstick Set</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(80 Sold)</span></div>
+      <p class="price">Rs. 950</p>
+      <div class="stock-alert">🔥 Selling Fast</div>
+      <button class="buy-btn" onclick="buyProduct('Lipstick Set - 950')">ORDER NOW</button>
+    </div>
+  </div>
+
   <div class="card" data-category="clothes">
     <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="product1.jpg" alt="Dress"></div>
+    <div class="img-container"><img src="dress1.jpg" alt="Lawn"></div>
     <div class="card-content">
-      <h3>Premium Luxury Collection Dress</h3>
-      <div class="rating">★★★★★ <span class="sold-count">(150+ Sold)</span></div>
-      <p class="price">Rs. 3,500 <span class="old-price">Rs. 3,500</span></p>
-      <div class="stock-alert">🔥 Only 4 left in stock!</div>
-      <div class="stock-bar"><div class="stock-fill"></div></div>
-      <button class="buy-btn" onclick="buyProduct('Dress - 3500')">ORDER ON WHATSAPP</button>
+      <h3>Premium Lawn 3-Piece Suit</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(210 Sold)</span></div>
+      <p class="price">Rs. 3,200</p>
+      <div class="stock-alert">🔥 Only 3 left!</div>
+      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 3200')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="men">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="men1.jpg" alt="Cotton"></div>
+    <div class="card-content">
+      <h3>Mens Egyptian Cotton Fabric</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(45 Sold)</span></div>
+      <p class="price">Rs. 2,800</p>
+      <div class="stock-alert">🔥 Hot Item</div>
+      <button class="buy-btn" onclick="buyProduct('Mens Cotton - 2800')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="kids">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="kids1.jpg" alt="Baby"></div>
+    <div class="card-content">
+      <h3>Baby Girl Summer Frock</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(67 Sold)</span></div>
+      <p class="price">Rs. 1,500</p>
+      <div class="stock-alert">🔥 Limited Stock</div>
+      <button class="buy-btn" onclick="buyProduct('Kids Frock - 1500')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="bags">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="bag1.jpg" alt="Bag"></div>
+    <div class="card-content">
+      <h3>Stylish Leather Handbag</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(112 Sold)</span></div>
+      <p class="price">Rs. 2,100</p>
+      <div class="stock-alert">🔥 Most Wanted</div>
+      <button class="buy-btn" onclick="buyProduct('Handbag - 2100')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="jewellery">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="jewel1.jpg" alt="Jewel"></div>
+    <div class="card-content">
+      <h3>Gold Plated Bridal Ring</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(34 Sold)</span></div>
+      <p class="price">Rs. 1,200</p>
+      <div class="stock-alert">🔥 100% Quality</div>
+      <button class="buy-btn" onclick="buyProduct('Ring - 1200')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="kitchen">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="kit1.jpg" alt="Pan"></div>
+    <div class="card-content">
+      <h3>Non-Stick Cooking Pot</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(29 Sold)</span></div>
+      <p class="price">Rs. 4,500</p>
+      <div class="stock-alert">🔥 In Stock</div>
+      <button class="buy-btn" onclick="buyProduct('Kitchen Pot - 4500')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="shoes">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="shoes1.jpg" alt="Heels"></div>
+    <div class="card-content">
+      <h3>Fancy Party Wear Heels</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(56 Sold)</span></div>
+      <p class="price">Rs. 2,500</p>
+      <div class="stock-alert">🔥 Trendy</div>
+      <button class="buy-btn" onclick="buyProduct('Heels - 2500')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="cosmetics">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="cos2.jpg" alt="Serum"></div>
+    <div class="card-content">
+      <h3>Organic Whitening Serum</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(340 Sold)</span></div>
+      <p class="price">Rs. 1,800</p>
+      <div class="stock-alert">🔥 Best Seller</div>
+      <button class="buy-btn" onclick="buyProduct('Serum - 1800')">ORDER NOW</button>
+    </div>
+  </div>
+
+  <div class="card" data-category="clothes">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="dress2.jpg" alt="Cotton"></div>
+    <div class="card-content">
+      <h3>Cotton Kurti for Women</h3>
+      <div class="rating">★★★★★ <span style="color:#999">(92 Sold)</span></div>
+      <p class="price">Rs. 1,950</p>
+      <div class="stock-alert">🔥 New Arrival</div>
+      <button class="buy-btn" onclick="buyProduct('Kurti - 1950')">ORDER NOW</button>
     </div>
   </div>
 </div>
 
 <div id="order-notification">
     <div class="notif-flex">
-        <div class="notif-icon">🛍️</div>
-        <div class="notif-text">
-            <span id="notif-content"></span><br>
-            <small style="color:#999">Just now ✅</small>
-        </div>
+        <div style="font-size: 25px;">🛍️</div>
+        <div id="notif-content" style="font-size: 11px;"></div>
     </div>
 </div>
 
@@ -128,17 +218,16 @@ footer { background: #1a1a1a; color: #999; padding: 30px 20px; text-align: cente
 </a>
 
 <footer>
-  <div class="footer-links" style="margin-bottom: 15px;">
-    <a onclick="openModal('privacy')">Privacy Policy</a>
-    <a onclick="openModal('contact')">Contact Us</a>
+  <div class="footer-links">
+    <a onclick="openModal('privacy')">Privacy</a>
+    <a onclick="openModal('contact')">Contact</a>
   </div>
-  <p>&copy; 2026 SARISH KANWAL Store.</p>
-  <p style="color: #666; font-size: 11px;">Pakistan, Punjab, Rahim Yar Khan</p>
+  <p>&copy; 2026 SARISH KANWAL Store | Pakistan, Punjab, Rahim Yar Khan</p>
 </footer>
 
-<div id="infoModal" class="modal">
-  <div class="modal-content">
-    <span onclick="closeModal()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px">&times;</span>
+<div id="infoModal" class="modal" style="display:none; position:fixed; z-index:3000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7);">
+  <div class="modal-content" style="background:white; margin:15% auto; padding:20px; border-radius:10px; width:80%; max-width:400px; position:relative;">
+    <span onclick="closeModal()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px;">&times;</span>
     <div id="modalBody"></div>
   </div>
 </div>
@@ -165,29 +254,27 @@ function buyProduct(p) { window.open(`https://wa.me/923195624640?text=I want to 
 
 function openModal(t) {
     const b = document.getElementById('modalBody');
-    if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Your data is safe.</p>";
-    else b.innerHTML="<h2>Contact Us</h2><p>WhatsApp: 03195624640<br>Location: Pakistan, Punjab, Rahim Yar Khan</p>";
+    if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Data safe and secure.</p>";
+    else b.innerHTML="<h2>Contact</h2><p>WhatsApp: 03195624640<br>Rahim Yar Khan, Pakistan</p>";
     document.getElementById('infoModal').style.display="block";
 }
 function closeModal() { document.getElementById('infoModal').style.display="none"; }
 
-// --- GLOBAL ORDER NOTIFICATIONS ---
-const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "John", "Rahul", "Zainab", "Ali", "Mehak", "Vikram", "Ayesha", "Omar"];
-const lNames = ["Khan", "Sharma", "Malik", "Patel", "Sheikh", "Javed", "Singh", "Shah"];
-const locs = ["Lahore, PK", "Mumbai, IN", "Dubai, UAE", "Karachi, PK", "Delhi, IN", "Rahim Yar Khan, PK", "London, UK", "New York, USA"];
-const prods = ["Luxury Bag", "Embroidered Suit", "Whitening Serum", "Designer Clutch"];
+// --- DYNAMIC NOTIFICATIONS ---
+const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "Rahul", "Zainab", "Ali", "Ayesha"];
+const locs = ["Lahore, PK", "Mumbai, IN", "Dubai, UAE", "Rahim Yar Khan, PK", "London, UK"];
+const products = ["Lawn Suit", "Whitening Serum", "Leather Bag", "Bridal Ring"];
 
 function showNotification() {
     const n = document.getElementById('order-notification');
-    const content = document.getElementById('notif-content');
-    const name = fNames[Math.floor(Math.random()*fNames.length)] + " " + lNames[Math.floor(Math.random()*lNames.length)];
+    const c = document.getElementById('notif-content');
+    const name = fNames[Math.floor(Math.random()*fNames.length)];
     const loc = locs[Math.floor(Math.random()*locs.length)];
-    const prod = prods[Math.floor(Math.random()*prods.length)];
-
-    content.innerHTML = `<b>${name}</b> from <b>${loc}</b> bought a <b>${prod}</b>`;
+    const prod = products[Math.floor(Math.random()*products.length)];
+    c.innerHTML = `<b>${name}</b> from <b>${loc}</b> just bought <b>${prod}</b>!`;
     n.style.display = "block";
     setTimeout(() => { n.style.display = "none"; }, 5000);
-    setTimeout(showNotification, Math.random() * (25000 - 15000) + 15000);
+    setTimeout(showNotification, 18000);
 }
 setTimeout(showNotification, 4000);
 </script>
