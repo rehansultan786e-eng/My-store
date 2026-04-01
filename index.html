@@ -5,236 +5,85 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SARISH KANWAL Store</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Roboto:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Roboto:wght@900&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --primary-color: #e91e63; 
-  --secondary-color: #1a9cb0;
+  --primary: #e91e63;
+  --whatsapp: #25d366;
+  --star: #f1c40f;
+  --bg: #f8f9fa;
 }
 
-body {
-  margin: 0;
-  font-family: 'Inter', sans-serif;
-  background: #f4f4f4;
-  color: #333;
-}
+body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: #333; display: flex; flex-direction: column; min-height: 100vh; overflow-x: hidden; }
 
-/* TOP BAR */
-.top-bar {
-  background: #222;
-  color: white;
-  font-size: 10px;
-  display: flex;
-  justify-content: space-between;
-  padding: 6px 20px;
-  text-transform: uppercase;
-}
+/* HEADER & NAV */
+.top-bar { background: #222; color: white; font-size: 10px; display: flex; justify-content: space-between; padding: 6px 20px; }
+.header { background: white; display: flex; align-items: center; justify-content: space-between; padding: 10px 20px; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+.store-name { font-family: 'Roboto', sans-serif; font-size: 24px; font-weight: 900; color: var(--primary); text-transform: uppercase; cursor: pointer; }
+.search-box { flex: 1; margin: 0 15px; display: flex; }
+.search-box input { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px 0 0 4px; outline: none; }
+.search-box button { background: var(--primary); color: white; border: none; padding: 0 15px; cursor: pointer; border-radius: 0 4px 4px 0; }
+.nav { background: #fff; padding: 10px 20px; display: flex; gap: 20px; font-size: 13px; border-bottom: 1px solid #eee; overflow-x: auto; }
+.nav a { text-decoration: none; color: #444; font-weight: 600; cursor: pointer; white-space: nowrap; }
+.nav a.active { color: var(--primary); border-bottom: 2px solid var(--primary); }
 
-/* HEADER */
-.header {
-  background: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 20px;
-  border-bottom: 1px solid #e2e2e2;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-}
+/* GRID & CARDS */
+.container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; padding: 15px; flex: 1; }
 
-.store-name {
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: 900;
-  color: var(--primary-color);
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  cursor: pointer;
+.card { 
+  background: white; border-radius: 8px; overflow: hidden; border: 1px solid #eee; 
+  transition: 0.3s; position: relative; display: flex; flex-direction: column;
 }
+.card:hover { transform: translateY(-5px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
-.search-box {
-  flex: 1;
-  margin: 0 15px;
-  display: flex;
-}
+/* Image Zoom */
+.img-container { width: 100%; height: 180px; overflow: hidden; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s ease; }
+.card:hover img { transform: scale(1.1); }
 
-.search-box input {
-  width: 100%;
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px 0 0 4px;
-  outline: none;
-  font-size: 13px;
-}
+.discount-badge { position: absolute; top: 8px; left: 8px; background: #ff4757; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 10; }
 
-.search-box button {
-  background: var(--primary-color);
-  color: white;
-  border: none;
-  padding: 0 15px;
-  cursor: pointer;
-  font-weight: bold;
-  border-radius: 0 4px 4px 0;
-}
+.card-content { padding: 10px; flex-grow: 1; }
+.card h3 { font-size: 13px; font-weight: 600; margin: 0; height: 36px; overflow: hidden; color: #222; }
 
-/* CATEGORY NAV */
-.nav {
-  background: #fff;
-  padding: 10px 20px;
-  display: flex;
-  gap: 20px;
-  font-size: 13px;
-  border-bottom: 1px solid #eee;
-  overflow-x: auto;
-}
+/* Conversion: Stars & Sold Tag */
+.rating { color: var(--star); font-size: 11px; margin: 5px 0; }
+.sold-count { color: #888; font-size: 10px; margin-left: 5px; }
 
-.nav a {
-  text-decoration: none;
-  color: #444;
-  font-weight: 600;
-  cursor: pointer;
-  padding-bottom: 3px;
-  white-space: nowrap;
-}
+.price { color: var(--primary); font-weight: 700; font-size: 16px; margin: 4px 0; }
+.old-price { font-size: 12px; color: #aaa; text-decoration: line-through; margin-left: 4px; }
 
-.nav a.active {
-  color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color);
-}
+/* Conversion: Urgency Stock Bar */
+.stock-alert { color: #d63031; font-size: 10px; font-weight: 700; margin: 5px 0; display: flex; align-items: center; gap: 4px; }
+.stock-bar { width: 100%; height: 4px; background: #eee; border-radius: 2px; margin-bottom: 8px; overflow: hidden; }
+.stock-fill { width: 30%; height: 100%; background: #d63031; }
 
-/* CONTAINER - GRID SIZE UPDATED */
-.container {
-  display: grid;
-  /* Cards ki width 180px set kar di hai */
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 12px;
-  padding: 15px;
-}
+.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 9px; font-size: 12px; cursor: pointer; border-radius: 4px; font-weight: bold; }
 
-/* CARD UI - HEIGHT ADJUSTED */
-.card {
-  background: white;
-  border-radius: 6px;
-  overflow: hidden;
-  border: 1px solid #eee;
-  transition: 0.3s;
-  display: flex;
-  flex-direction: column;
-}
+/* FLOATING WHATSAPP */
+.whatsapp-float { position: fixed; bottom: 25px; right: 20px; background: var(--whatsapp); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); z-index: 2000; transition: 0.3s; }
+.whatsapp-float:hover { transform: scale(1.1); }
 
-.card:hover {
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  transform: translateY(-2px);
-}
+/* FOOTER & MODAL */
+footer { background: #222; color: #bbb; padding: 25px; text-align: center; font-size: 12px; margin-top: 30px; }
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); }
+.modal-content { background: white; margin: 15% auto; padding: 20px; border-radius: 8px; width: 85%; max-width: 400px; position: relative; }
 
-.card img {
-  width: 100%;
-  height: 180px; /* Image height choti kar di */
-  object-fit: cover;
-}
-
-.card-content {
-  padding: 10px;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.card h3 {
-  font-size: 13px; /* Font chota kiya */
-  font-weight: 600;
-  margin: 0 0 5px 0;
-  height: 36px;
-  overflow: hidden;
-  color: #222;
-}
-
-.price {
-  color: var(--primary-color);
-  font-weight: 700;
-  font-size: 16px;
-  margin: 5px 0;
-}
-
-.details {
-  font-size: 11px;
-  color: #666;
-  margin-bottom: 5px;
-  overflow: hidden;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  line-height: 1.3;
-}
-
-.details.expanded {
-  display: block;
-  -webkit-line-clamp: initial;
-}
-
-.see-more {
-  background: none;
-  border: none;
-  color: var(--secondary-color);
-  font-size: 11px;
-  cursor: pointer;
-  padding: 0;
-  font-weight: 600;
-  margin-bottom: 8px;
-  text-align: left;
-}
-
-.delivery {
-  font-size: 10px;
-  color: #2ab52a;
-  font-weight: bold;
-  margin-top: auto;
-}
-
-.buy-btn {
-  width: 100%;
-  border: none;
-  background: var(--primary-color);
-  color: white;
-  padding: 8px;
-  margin-top: 8px;
-  font-size: 12px;
-  cursor: pointer;
-  border-radius: 4px;
-  font-weight: bold;
-}
-
-/* CATEGORY HEADER */
-.category-info {
-  padding: 15px 20px;
-  background: white;
-  margin: 10px 15px;
-  display: none;
-  border-left: 4px solid var(--primary-color);
-  border-radius: 4px;
-}
-
-.category-info h2 { font-size: 18px; margin: 0; }
-
-@keyframes slideUp {
-  from { transform: translateY(100px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+@keyframes slideUp { from { transform: translateY(100px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <span>Helpline: 03195624640</span>
-  <span>🔥 FREE DELIVERY ON ALL ORDERS (LIMITED TIME OFFER!)</span>
+  <span>📞 03195624640</span>
+  <span>🚚 FREE DELIVERY NATIONWIDE</span>
 </div>
 
 <div class="header">
   <div class="store-name" onclick="filterCategory('all')">SARISH KANWAL</div>
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search product..." onkeyup="searchProduct()">
+    <input type="text" id="searchInput" placeholder="Try 'Sute' or 'Seram'..." onkeyup="searchProduct()">
     <button onclick="searchProduct()">Search</button>
   </div>
 </div>
@@ -244,75 +93,78 @@ body {
   <a onclick="filterCategory('clothes')">Clothes</a>
   <a onclick="filterCategory('shoes')">Shoes</a>
   <a onclick="filterCategory('cosmetics')">Cosmetics</a>
-  <a onclick="filterCategory('bags')">Bags</a>
-</div>
-
-<div id="categoryHeader" class="category-info">
-  <h2 id="catTitle">Category Title</h2>
 </div>
 
 <div class="container" id="productContainer">
   <div class="card" data-category="clothes">
-    <img src="product1.jpg" alt="Suit">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="product1.jpg" alt="Suit"></div>
     <div class="card-content">
-      <h3>Lawn Unstitched 3-Piece Suit</h3>
-      <p class="price">Rs. 2,999</p>
-      <div class="details">Summer collection with premium embroidery and matching dupatta.</div>
-      <button class="see-more" onclick="toggleDetails(this)">See More</button>
-      <p class="delivery">Free Home Delivery</p>
-      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 2999')">Buy Now</button>
+      <h3>Premium Embroidered Lawn Suit</h3>
+      <div class="rating">★★★★★ <span class="sold-count">(124 Sold)</span></div>
+      <p class="price">Rs. 2,999 <span class="old-price">Rs. 2,999</span></p>
+      <div class="stock-alert">🔥 Low Stock: Only 3 left!</div>
+      <div class="stock-bar"><div class="stock-fill"></div></div>
+      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 2999')">ORDER ON WHATSAPP</button>
     </div>
   </div>
 
   <div class="card" data-category="cosmetics">
-    <img src="product2.jpg" alt="Serum">
+    <div class="discount-badge">0% OFF</div>
+    <div class="img-container"><img src="product2.jpg" alt="Serum"></div>
     <div class="card-content">
-      <h3>Glow Whitening Serum</h3>
-      <p class="price">Rs. 1,250</p>
-      <div class="details">Fast results whitening serum for all skin types.</div>
-      <button class="see-more" onclick="toggleDetails(this)">See More</button>
-      <p class="delivery">Free Home Delivery</p>
-      <button class="buy-btn" onclick="buyProduct('Glow Serum - 1250')">Buy Now</button>
+      <h3>Advanced Whitening Face Serum</h3>
+      <div class="rating">★★★★★ <span class="sold-count">(89 Sold)</span></div>
+      <p class="price">Rs. 1,250 <span class="old-price">Rs. 1,250</span></p>
+      <div class="stock-alert">🔥 Selling Fast!</div>
+      <div class="stock-bar"><div class="stock-fill" style="width: 80%;"></div></div>
+      <button class="buy-btn" onclick="buyProduct('Glow Serum - 1250')">ORDER ON WHATSAPP</button>
     </div>
   </div>
 </div>
 
-<div id="order-notification" style="display: none; position: fixed; bottom: 20px; left: 20px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); z-index: 9999; border-left: 4px solid #e91e63; max-width: 250px; animation: slideUp 0.5s ease;">
-    <div style="display: flex; align-items: center; gap: 10px;">
-        <div style="font-size: 20px;">🛍️</div>
-        <div>
-            <p id="notif-text" style="margin: 0; font-size: 12px; color: #333;"></p>
-            <small style="color: #999; font-size: 10px;">Just now</small>
-        </div>
-    </div>
+<a href="https://wa.me/923195624640" class="whatsapp-float" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
+</a>
+
+<div id="order-notification" style="display: none; position: fixed; bottom: 90px; left: 20px; background: white; padding: 12px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); z-index: 1500; border-left: 4px solid var(--primary); max-width: 240px; animation: slideUp 0.5s ease;">
+    <p id="notif-text" style="margin: 0; font-size: 11px; color: #333;"></p>
+</div>
+
+<footer>
+  <div style="margin-bottom:15px">
+    <a onclick="openModal('privacy')" style="color:white; margin:0 10px; cursor:pointer">Privacy</a>
+    <a onclick="openModal('contact')" style="color:white; margin:0 10px; cursor:pointer">Contact</a>
+  </div>
+  <p>&copy; 2026 SARISH KANWAL. Made with ❤️ for Quality.</p>
+</footer>
+
+<div id="infoModal" class="modal">
+  <div class="modal-content">
+    <span onclick="closeModal()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px">&times;</span>
+    <div id="modalBody"></div>
+  </div>
 </div>
 
 <script>
-// Fuzzy Search Logic
+// Fuzzy Search Logic (Optimized for speed)
 function getEditDistance(a, b) {
-  if (a.length === 0) return b.length;
-  if (b.length === 0) return a.length;
-  var matrix = [];
-  for (var i = 0; i <= b.length; i++) matrix[i] = [i];
-  for (var j = 0; j <= a.length; j++) matrix[0][j] = j;
-  for (i = 1; i <= b.length; i++) {
-    for (j = 1; j <= a.length; j++) {
-      if (b.charAt(i - 1) == a.charAt(j - 1)) matrix[i][j] = matrix[i - 1][j - 1];
-      else matrix[i][j] = Math.min(matrix[i - 1][j - 1] + 1, Math.min(matrix[i][j - 1] + 1, matrix[i - 1][j] + 1));
-    }
-  }
-  return matrix[b.length][a.length];
+  if(a.length==0) return b.length; if(b.length==0) return a.length;
+  var m=[]; for(var i=0;i<=b.length;i++){m[i]=[i]} for(var j=0;j<=a.length;j++){m[0][j]=j}
+  for(i=1;i<=b.length;i++){for(j=1;j<=a.length;j++){
+  if(b.charAt(i-1)==a.charAt(j-1))m[i][j]=m[i-1][j-1];
+  else m[i][j]=Math.min(m[i-1][j-1]+1,Math.min(m[i][j-1]+1,m[i-1][j]+1));}}
+  return m[b.length][a.length];
 }
 
 function searchProduct() {
   let input = document.getElementById('searchInput').value.toLowerCase().trim();
   let cards = document.getElementsByClassName('card');
   for (let i = 0; i < cards.length; i++) {
-    let title = cards[i].getElementsByTagName('h3')[0].innerText.toLowerCase();
+    let title = cards[i].querySelector('h3').innerText.toLowerCase();
     let isMatch = (input === "" || title.includes(input));
     if (!isMatch && input.length > 2) {
-      let words = title.split(" ");
-      words.forEach(word => { if (getEditDistance(input, word) <= 2) isMatch = true; });
+      title.split(" ").forEach(word => { if (getEditDistance(input, word) <= 1) isMatch = true; });
     }
     cards[i].style.display = isMatch ? "" : "none";
   }
@@ -320,42 +172,33 @@ function searchProduct() {
 
 function filterCategory(cat) {
   let cards = document.getElementsByClassName('card');
-  let header = document.getElementById('categoryHeader');
-  document.getElementById('catTitle').innerText = cat.toUpperCase() + " COLLECTION";
-  header.style.display = (cat === 'all') ? "none" : "block";
+  document.querySelectorAll('.nav a').forEach(a => a.classList.remove('active'));
   for (let i = 0; i < cards.length; i++) {
     let cardCat = cards[i].getAttribute('data-category');
     cards[i].style.display = (cat === 'all' || cardCat === cat) ? "" : "none";
   }
 }
 
-function toggleDetails(btn) {
-  const details = btn.previousElementSibling;
-  details.classList.toggle('expanded');
-  btn.innerText = details.classList.contains('expanded') ? "See Less" : "See More";
-}
+function buyProduct(p) { window.open(`https://wa.me/03195624640?text=I want to order: ${p}`, "_blank"); }
 
-function buyProduct(product) {
-  window.open(`https://wa.me/923195624640?text=${encodeURIComponent('Assalam-o-Alaikum, I want to order: ' + product)}`, "_blank");
+function openModal(t) {
+  const b = document.getElementById('modalBody');
+  if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Your data is safe with us.</p>";
+  else b.innerHTML="<h2>Contact</h2><p>WhatsApp: 03195624640<br>Location: Liaquatpur</p>";
+  document.getElementById('infoModal').style.display="block";
 }
+function closeModal() { document.getElementById('infoModal').style.display="none"; }
 
-// Notifications
-const names = ["Ayesha", "Sana", "Fatima", "Zainab", "Hina", "Mariam", "Saba"];
-const cities = ["Lahore", "Karachi", "Islamabad", "Faisalabad", "Multan"];
-const productsNotif = ["Whitening Serum", "Lawn Suit", "Fancy Shoes", "Leather Bag"];
-
-function showNotification() {
-  const notif = document.getElementById('order-notification');
-  const text = document.getElementById('notif-text');
-  const rName = names[Math.floor(Math.random() * names.length)];
-  const rCity = cities[Math.floor(Math.random() * cities.length)];
-  const rProduct = productsNotif[Math.floor(Math.random() * productsNotif.length)];
-  text.innerHTML = `<b>${rName}</b> from <b>${rCity}</b> just bought <b>${rProduct}!</b>`;
-  notif.style.display = "block";
-  setTimeout(() => { notif.style.display = "none"; }, 5000);
-  setTimeout(showNotification, Math.floor(Math.random() * (25000 - 15000) + 15000));
+// Real-looking Orders Notification
+const names=["Anum","Sana","Kiran","Fatima","Zainab"]; 
+const cities=["Lahore","Karachi","Multan","Peshawar"];
+function showOrder() {
+  const n = document.getElementById('order-notification');
+  document.getElementById('notif-text').innerHTML = `✅ <b>${names[Math.floor(Math.random()*names.length)]}</b> from ${cities[Math.floor(Math.random()*cities.length)]} just ordered a Serum!`;
+  n.style.display="block"; setTimeout(()=>n.style.display="none", 4000);
+  setTimeout(showOrder, Math.random()*(30000-15000)+15000);
 }
-setTimeout(showNotification, 5000);
+setTimeout(showOrder, 5000);
 </script>
 
 </body>
