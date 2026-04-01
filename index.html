@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SARISH KANWAL STORE </title>
+<title>SARISH KANWAL Store</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@900&display=swap" rel="stylesheet">
 
 <style>
@@ -19,41 +19,51 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color
 .search-box input { border: none; background: transparent; width: 100%; padding: 8px; outline: none; font-size: 14px; }
 .search-btn { background: #8bc34a; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
 
-/* CIRCULAR CATEGORIES (Like Screenshot) */
+/* CATEGORY SECTION */
 .cat-section { background: white; padding: 15px 10px; overflow-x: auto; white-space: nowrap; display: flex; gap: 15px; scrollbar-width: none; }
 .cat-item { display: inline-block; text-align: center; min-width: 75px; cursor: pointer; }
 .cat-circle { width: 60px; height: 60px; background: #f8f9fa; border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; transition: 0.3s; border: 1px solid #eee; }
-.cat-item:hover .cat-circle { border-color: var(--primary); transform: scale(1.05); }
-.cat-item span { font-size: 11px; font-weight: 600; color: #555; display: block; overflow: hidden; text-overflow: ellipsis; }
+.cat-item span { font-size: 11px; font-weight: 600; color: #555; display: block; }
 
 /* GRID & CARDS */
 .section-title { padding: 15px 20px 5px; font-size: 18px; font-weight: 700; color: #222; }
 .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 12px; padding: 15px; }
 
-.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; position: relative; display: flex; flex-direction: column; }
-.img-container { width: 100%; height: 170px; overflow: hidden; }
-.card img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-.card:hover img { transform: scale(1.1); }
+.card { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #eee; transition: 0.3s; display: flex; flex-direction: column; }
+.img-container { width: 100%; height: 170px; overflow: hidden; position: relative; }
+.card img { width: 100%; height: 100%; object-fit: cover; }
 
-.discount-badge { position: absolute; top: 8px; left: 8px; background: #ff4757; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 10; }
+/* 2 LINE LIMIT FOR TEXT */
+.product-title { 
+    font-size: 13px; font-weight: 600; margin: 0; color: #444; line-height: 1.4;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; 
+    height: 36px;
+}
 
-.card-content { padding: 10px; flex-grow: 1; }
-.card h3 { font-size: 12px; font-weight: 600; margin: 0; height: 34px; overflow: hidden; line-height: 1.4; color: #444; }
-.rating { color: var(--star); font-size: 10px; margin: 5px 0; }
-.price { color: #000; font-weight: 700; font-size: 16px; margin: 5px 0; }
-.stock-alert { color: #d63031; font-size: 9px; font-weight: 700; margin-bottom: 8px; }
+.see-more-text { color: var(--primary); font-size: 11px; font-weight: 700; cursor: pointer; margin-top: 4px; display: inline-block; }
 
-.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 8px; font-size: 11px; cursor: pointer; border-radius: 6px; font-weight: bold; }
+.card-content { padding: 10px; flex-grow: 1; display: flex; flex-direction: column; }
+.price { color: #000; font-weight: 700; font-size: 16px; margin: 8px 0; }
+.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 10px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: auto; }
+
+/* MODAL STYLE (Product Details) */
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); }
+.modal-content { 
+    background: white; margin: 10% auto; padding: 25px; border-radius: 15px; 
+    width: 85%; max-width: 450px; position: relative; max-height: 80vh; overflow-y: auto; 
+    animation: zoomIn 0.3s ease;
+}
+@keyframes zoomIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.close-modal { position: absolute; right: 15px; top: 10px; font-size: 28px; cursor: pointer; color: #666; }
+.modal-img { width: 100%; border-radius: 10px; margin-bottom: 15px; }
+.modal-title { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: #222; }
+.modal-desc { font-size: 14px; color: #555; line-height: 1.6; margin-bottom: 15px; }
 
 /* NOTIFICATION POPUP */
-#order-notification { display: none; position: fixed; bottom: 30px; left: 20px; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; border-left: 5px solid var(--primary); max-width: 260px; animation: slideIn 0.5s ease-out; }
-.notif-flex { display: flex; align-items: center; gap: 10px; }
-@keyframes slideIn { from { transform: translateX(-100%); } to { transform: translateX(0); } }
+#order-notification { display: none; position: fixed; bottom: 30px; left: 20px; background: white; padding: 12px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; border-left: 5px solid var(--primary); max-width: 260px; }
 
-/* WHATSAPP & FOOTER */
-.whatsapp-float { position: fixed; bottom: 30px; right: 20px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2); z-index: 2000; }
+.whatsapp-float { position: fixed; bottom: 30px; right: 20px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 2000; }
 footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; margin-top: 20px; }
-.footer-links a { color: #222; margin: 0 10px; text-decoration: none; font-weight: 600; }
 </style>
 </head>
 <body>
@@ -65,155 +75,59 @@ footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12
   </div>
   <div style="display:flex; align-items:center;">
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Search Product Name/Code..." onkeyup="searchProduct()">
+        <input type="text" id="searchInput" placeholder="Search Product..." onkeyup="searchProduct()">
     </div>
-    <button class="search-btn" onclick="searchProduct()">Search</button>
+    <button class="search-btn">Search</button>
   </div>
 </div>
 
 <div class="cat-section">
   <div class="cat-item" onclick="filterCategory('all')"><div class="cat-circle">🏠</div><span>All</span></div>
   <div class="cat-item" onclick="filterCategory('cosmetics')"><div class="cat-circle">💄</div><span>Cosmetics</span></div>
-  <div class="cat-item" onclick="filterCategory('clothes')"><div class="cat-circle">👗</div><span>Womens Unstich</span></div>
-  <div class="cat-item" onclick="filterCategory('men')"><div class="cat-circle">👕</div><span>Mens Unstich</span></div>
-  <div class="cat-item" onclick="filterCategory('kids')"><div class="cat-circle">👶</div><span>Kids Clothing</span></div>
-  <div class="cat-item" onclick="filterCategory('bags')"><div class="cat-circle">👜</div><span>Handbags</span></div>
-  <div class="cat-item" onclick="filterCategory('jewellery')"><div class="cat-circle">💍</div><span>Jewellery</span></div>
-  <div class="cat-item" onclick="filterCategory('kitchen')"><div class="cat-circle">🍳</div><span>Kitchenware</span></div>
+  <div class="cat-item" onclick="filterCategory('clothes')"><div class="cat-circle">👗</div><span>Dresses</span></div>
+  <div class="cat-item" onclick="filterCategory('bags')"><div class="cat-circle">👜</div><span>Bags</span></div>
 </div>
 
-<div class="section-title">Best Delivery Products</div>
+<div class="section-title">Latest Products</div>
 
 <div class="container" id="productContainer">
   <div class="card" data-category="cosmetics">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="zafranicosmetic.jpg" alt="cream"></div>
+    <div class="img-container"><img src="zafranicosmetic.jpg" alt="creame"></div>
     <div class="card-content">
-      <h3>Perfect for Pakistani skin, this Zafrani Whitening Cream delivers radiant, even-toned results without harsh chemicals. Ideal for daily use, it’s gentle enough for sensitive skin yet powerful enough to tackle dullness, acne scars, and uneven pigmentation. Made with premium, nourishing ingredients, this cream is designed to deeply hydrate and rejuvenate your skin while protecting it from environmental damage. Its smooth, creamy texture absorbs quickly without leaving a greasy residue, making it perfect for all seasons and daily routines. The durable, reusable jar ensures long-lasting freshness and easy storage, while the stylish design adds a touch of elegance to your skincare collection. - Premium Quality cream formulated for all skin types - Durable glass jar with secure lid for long-term use - Stylish design with vibrant orange and white swirls - New Arrival with proven whitening and brightening benefits - Gentle formula that removes impurities and treats fine lines - Best price in Pakistan for high-performance skincare
-• Material: Cream
-• Texture: Cream
-• Skin Types: All Skin Types
-• Product Feature: Exfoliator, Whitening, Whitening And Brightening, Acne Scar Removal, Brightening, Dead Skin Remover, Hydrating, Nourishing, Rejuvenating, Glowing, Treat Fine Lines, Removes Dirt, Remove Impurities, Dullness, Gentle For Skin
-• Package Includes: 1 x Whitening Cream
-• Note: Before using any new cosmetic product, perform a patch test on a small skin area. Verify ingredients for allergies and follow package warnings and directions.</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(80 Sold)</span></div>
-      <p class="price">Rs. 950</p>
-      <div class="stock-alert">🔥 Selling Fast</div>
-      <button class="buy-btn" onclick="buyProduct('Lipstick Set - 950')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="clothes">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="dress1.jpg" alt="Lawn"></div>
-    <div class="card-content">
-      <h3>Premium Lawn 3-Piece Suit</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(210 Sold)</span></div>
-      <p class="price">Rs. 3,200</p>
-      <div class="stock-alert">🔥 Only 3 left!</div>
-      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 3200')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="men">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="men1.jpg" alt="Cotton"></div>
-    <div class="card-content">
-      <h3>Mens Egyptian Cotton Fabric</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(45 Sold)</span></div>
-      <p class="price">Rs. 2,800</p>
-      <div class="stock-alert">🔥 Hot Item</div>
-      <button class="buy-btn" onclick="buyProduct('Mens Cotton - 2800')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="kids">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="kids1.jpg" alt="Baby"></div>
-    <div class="card-content">
-      <h3>Baby Girl Summer Frock</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(67 Sold)</span></div>
-      <p class="price">Rs. 1,500</p>
-      <div class="stock-alert">🔥 Limited Stock</div>
-      <button class="buy-btn" onclick="buyProduct('Kids Frock - 1500')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="bags">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="bag1.jpg" alt="Bag"></div>
-    <div class="card-content">
-      <h3>Stylish Leather Handbag</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(112 Sold)</span></div>
-      <p class="price">Rs. 2,100</p>
-      <div class="stock-alert">🔥 Most Wanted</div>
-      <button class="buy-btn" onclick="buyProduct('Handbag - 2100')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="jewellery">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="jewel1.jpg" alt="Jewel"></div>
-    <div class="card-content">
-      <h3>Gold Plated Bridal Ring</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(34 Sold)</span></div>
-      <p class="price">Rs. 1,200</p>
-      <div class="stock-alert">🔥 100% Quality</div>
-      <button class="buy-btn" onclick="buyProduct('Ring - 1200')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="kitchen">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="kit1.jpg" alt="Pan"></div>
-    <div class="card-content">
-      <h3>Non-Stick Cooking Pot</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(29 Sold)</span></div>
-      <p class="price">Rs. 4,500</p>
-      <div class="stock-alert">🔥 In Stock</div>
-      <button class="buy-btn" onclick="buyProduct('Kitchen Pot - 4500')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="shoes">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="shoes1.jpg" alt="Heels"></div>
-    <div class="card-content">
-      <h3>Fancy Party Wear Heels</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(56 Sold)</span></div>
-      <p class="price">Rs. 2,500</p>
-      <div class="stock-alert">🔥 Trendy</div>
-      <button class="buy-btn" onclick="buyProduct('Heels - 2500')">ORDER NOW</button>
-    </div>
-  </div>
-
-  <div class="card" data-category="cosmetics">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="cos2.jpg" alt="Serum"></div>
-    <div class="card-content">
-      <h3>Organic Whitening Serum</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(340 Sold)</span></div>
+      <h3 class="product-title">Organic Vitamin C Serum with 24K Gold Particles for Instant Glow and Anti-Aging Effects</h3>
+      <span class="see-more-text" onclick="showProductDetails('Organic Vitamin C Serum', 'cos1.jpg', 'Yeh serum aapki skin ko natural glow deta hai. Is mein Vitamin C aur 24K Gold particles hain jo skin ko jhuriyon se bachate hain aur rangat saaf karte hain. 100% Organic aur side-effects se pak.', '1,800')">See More...</span>
       <p class="price">Rs. 1,800</p>
-      <div class="stock-alert">🔥 Best Seller</div>
       <button class="buy-btn" onclick="buyProduct('Serum - 1800')">ORDER NOW</button>
     </div>
   </div>
 
   <div class="card" data-category="clothes">
-    <div class="discount-badge">0% OFF</div>
-    <div class="img-container"><img src="dress2.jpg" alt="Cotton"></div>
+    <div class="img-container"><img src="dress1.jpg" alt="Lawn"></div>
     <div class="card-content">
-      <h3>Cotton Kurti for Women</h3>
-      <div class="rating">★★★★★ <span style="color:#999">(92 Sold)</span></div>
-      <p class="price">Rs. 1,950</p>
-      <div class="stock-alert">🔥 New Arrival</div>
-      <button class="buy-btn" onclick="buyProduct('Kurti - 1950')">ORDER NOW</button>
+      <h3 class="product-title">Luxury Embroidered 3-Piece Lawn Suit with Silk Dupatta and Heavy Patch Work</h3>
+      <span class="see-more-text" onclick="showProductDetails('Luxury Lawn Suit', 'dress1.jpg', 'Premium quality lawn suit. Is mein heavy embroidery hai aur silk dupatta saath hai. Party wear aur daily wear dono ke liye behtreen hai. Color ki full guarantee hai.', '3,500')">See More...</span>
+      <p class="price">Rs. 3,500</p>
+      <button class="buy-btn" onclick="buyProduct('Lawn Suit - 3500')">ORDER NOW</button>
+    </div>
+  </div>
+  
+  </div>
+
+<div id="productModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeProductModal()">&times;</span>
+    <img id="mImg" class="modal-img" src="">
+    <h2 id="mTitle" class="modal-title"></h2>
+    <p id="mDesc" class="modal-desc"></p>
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span id="mPrice" style="font-size:20px; font-weight:700; color:var(--primary);"></span>
+        <button id="mBuyBtn" class="buy-btn" style="width:150px;">Buy on WhatsApp</button>
     </div>
   </div>
 </div>
 
 <div id="order-notification">
-    <div class="notif-flex">
+    <div style="display:flex; align-items:center; gap:10px;">
         <div style="font-size: 25px;">🛍️</div>
         <div id="notif-content" style="font-size: 11px;"></div>
     </div>
@@ -224,26 +138,39 @@ footer { background: #fff; padding: 30px 20px; text-align: center; font-size: 12
 </a>
 
 <footer>
-  <div class="footer-links">
-    <a onclick="openModal('privacy')">Privacy</a>
-    <a onclick="openModal('contact')">Contact</a>
+  <div style="margin-bottom:15px;">
+    <a onclick="openInfo('privacy')" style="cursor:pointer; margin:0 10px;">Privacy Policy</a>
+    <a onclick="openInfo('contact')" style="cursor:pointer; margin:0 10px;">Contact Us</a>
   </div>
-  <p>&copy; 2026 SARISH KANWAL Store | Pakistan, Punjab, Rahim Yar Khan</p>
+  <p>&copy; 2026 SARISH KANWAL Store | Rahim Yar Khan</p>
 </footer>
 
-<div id="infoModal" class="modal" style="display:none; position:fixed; z-index:3000; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.7);">
-  <div class="modal-content" style="background:white; margin:15% auto; padding:20px; border-radius:10px; width:80%; max-width:400px; position:relative;">
-    <span onclick="closeModal()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px;">&times;</span>
-    <div id="modalBody"></div>
-  </div>
-</div>
-
 <script>
+// --- SHOW PRODUCT DETAILS MODAL ---
+function showProductDetails(title, img, desc, price) {
+    document.getElementById('mTitle').innerText = title;
+    document.getElementById('mImg').src = img;
+    document.getElementById('mDesc').innerText = desc;
+    document.getElementById('mPrice').innerText = "Rs. " + price;
+    document.getElementById('mBuyBtn').onclick = function() { buyProduct(title + " - " + price); };
+    document.getElementById('productModal').style.display = "block";
+}
+
+function closeProductModal() {
+    document.getElementById('productModal').style.display = "none";
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    let modal = document.getElementById('productModal');
+    if (event.target == modal) { modal.style.display = "none"; }
+}
+
 function searchProduct() {
     let input = document.getElementById('searchInput').value.toLowerCase().trim();
     let cards = document.getElementsByClassName('card');
     for (let i = 0; i < cards.length; i++) {
-        let title = cards[i].querySelector('h3').innerText.toLowerCase();
+        let title = cards[i].querySelector('.product-title').innerText.toLowerCase();
         cards[i].style.display = (title.includes(input) || input === "") ? "" : "none";
     }
 }
@@ -258,31 +185,23 @@ function filterCategory(cat) {
 
 function buyProduct(p) { window.open(`https://wa.me/923195624640?text=I want to order: ${p}`, "_blank"); }
 
-function openModal(t) {
-    const b = document.getElementById('modalBody');
-    if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Data safe and secure.</p>";
-    else b.innerHTML="<h2>Contact</h2><p>WhatsApp: 03195624640<br>Rahim Yar Khan, Pakistan</p>";
-    document.getElementById('infoModal').style.display="block";
+function openInfo(type) {
+    if(type=='privacy') alert("Privacy Policy: Hum aapka data save nahi karte.");
+    else alert("Contact: 03195624640 | Rahim Yar Khan");
 }
-function closeModal() { document.getElementById('infoModal').style.display="none"; }
 
 // --- DYNAMIC NOTIFICATIONS ---
-const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "Rahul", "Zainab", "Ali", "Ayesha"];
-const locs = ["Lahore, PK", "Mumbai, IN", "Dubai, UAE", "Rahim Yar Khan, PK", "London, UK"];
-const products = ["Lawn Suit", "Whitening Serum", "Leather Bag", "Bridal Ring"];
-
+const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "Ali", "Ayesha"];
 function showNotification() {
     const n = document.getElementById('order-notification');
     const c = document.getElementById('notif-content');
     const name = fNames[Math.floor(Math.random()*fNames.length)];
-    const loc = locs[Math.floor(Math.random()*locs.length)];
-    const prod = products[Math.floor(Math.random()*products.length)];
-    c.innerHTML = `<b>${name}</b> from <b>${loc}</b> just bought <b>${prod}</b>!`;
+    c.innerHTML = `<b>${name}</b> just placed an order!`;
     n.style.display = "block";
-    setTimeout(() => { n.style.display = "none"; }, 5000);
-    setTimeout(showNotification, 18000);
+    setTimeout(() => { n.style.display = "none"; }, 4000);
+    setTimeout(showNotification, 20000);
 }
-setTimeout(showNotification, 4000);
+setTimeout(showNotification, 5000);
 </script>
 
 </body>
