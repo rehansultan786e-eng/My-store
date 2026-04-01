@@ -7,15 +7,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto:wght@900&display=swap" rel="stylesheet">
 
 <style>
-:root { --primary: #e91e63; --whatsapp: #25d366; --bg: #f8f9fa; }
+:root { --primary: #e91e63; --whatsapp: #25d366; --bg: #f8f9fa; --star: #f1c40f; }
 body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color: #333; display: flex; flex-direction: column; min-height: 100vh; }
 
 /* HEADER & NAV */
-.top-bar { background: #222; color: white; font-size: 10px; display: flex; justify-content: space-between; padding: 8px 20px; letter-spacing: 0.5px; }
+.top-bar { background: #222; color: white; font-size: 10px; display: flex; justify-content: space-between; padding: 8px 20px; }
 .header { background: white; display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
 .store-name { font-family: 'Roboto', sans-serif; font-size: 26px; font-weight: 900; color: var(--primary); text-transform: uppercase; cursor: pointer; letter-spacing: -1px; }
 .search-box { flex: 1; margin: 0 20px; display: flex; }
-.search-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px 0 0 6px; outline: none; font-size: 14px; }
+.search-box input { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px 0 0 6px; outline: none; }
 .search-box button { background: var(--primary); color: white; border: none; padding: 0 20px; cursor: pointer; border-radius: 0 6px 6px 0; font-weight: bold; }
 .nav { background: #fff; padding: 12px 20px; display: flex; gap: 25px; font-size: 14px; border-bottom: 1px solid #eee; overflow-x: auto; }
 .nav a { text-decoration: none; color: #555; font-weight: 600; cursor: pointer; white-space: nowrap; transition: 0.3s; }
@@ -25,60 +25,74 @@ body { margin: 0; font-family: 'Inter', sans-serif; background: var(--bg); color
 .container { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; padding: 20px; flex: 1; }
 .card { background: white; border-radius: 10px; overflow: hidden; border: 1px solid #eee; transition: 0.4s; position: relative; display: flex; flex-direction: column; }
 .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
-.img-container { width: 100%; height: 190px; overflow: hidden; }
+
+/* Image & Zoom */
+.img-container { width: 100%; height: 180px; overflow: hidden; position: relative; }
 .card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s; }
 .card:hover img { transform: scale(1.1); }
-.card-content { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
-.card h3 { font-size: 14px; font-weight: 600; margin: 0; height: 40px; overflow: hidden; line-height: 1.4; }
-.price { color: var(--primary); font-weight: 700; font-size: 18px; margin: 8px 0; }
-.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 10px; font-size: 13px; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: auto; }
 
-/* BEAUTIFUL NOTIFICATION POPUP */
+/* Discount Badge */
+.discount-badge { position: absolute; top: 8px; left: 8px; background: #ff4757; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 4px; z-index: 10; }
+
+.card-content { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; }
+.card h3 { font-size: 13px; font-weight: 600; margin: 0; height: 36px; overflow: hidden; line-height: 1.4; color: #222; }
+
+/* Stars & Rating */
+.rating { color: var(--star); font-size: 11px; margin: 6px 0; }
+.sold-count { color: #888; font-size: 10px; margin-left: 4px; }
+
+.price { color: var(--primary); font-weight: 700; font-size: 17px; margin: 5px 0; }
+.old-price { font-size: 12px; color: #aaa; text-decoration: line-through; margin-left: 4px; }
+
+/* Low Stock Alert */
+.stock-alert { color: #d63031; font-size: 10px; font-weight: 700; margin: 5px 0; }
+.stock-bar { width: 100%; height: 4px; background: #eee; border-radius: 2px; margin-bottom: 10px; overflow: hidden; }
+.stock-fill { width: 35%; height: 100%; background: #d63031; }
+
+.buy-btn { width: 100%; border: none; background: var(--primary); color: white; padding: 10px; font-size: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; margin-top: auto; }
+
+/* NOTIFICATION POPUP */
 #order-notification {
     display: none; position: fixed; bottom: 30px; left: 20px; 
     background: white; padding: 12px 18px; border-radius: 12px; 
     box-shadow: 0 10px 30px rgba(0,0,0,0.15); z-index: 2500; 
-    border-left: 6px solid var(--primary); max-width: 300px;
+    border-left: 6px solid var(--primary); max-width: 280px;
     animation: slideIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-.notif-flex { display: flex; align-items: center; gap: 15px; }
-.notif-icon { background: #fff0f5; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-.notif-text { font-size: 12px; color: #444; line-height: 1.5; }
-.notif-text b { color: #000; }
-.notif-time { display: block; font-size: 10px; color: #999; margin-top: 3px; }
+.notif-flex { display: flex; align-items: center; gap: 12px; }
+.notif-icon { background: #fff0f5; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.notif-text { font-size: 11px; color: #444; line-height: 1.4; }
 
 /* FOOTER */
-footer { background: #1a1a1a; color: #999; padding: 40px 20px; text-align: center; font-size: 13px; margin-top: 40px; }
-.footer-links a { color: white; margin: 0 15px; text-decoration: none; cursor: pointer; font-weight: 500; }
+footer { background: #1a1a1a; color: #999; padding: 30px 20px; text-align: center; font-size: 12px; margin-top: 40px; }
+.footer-links a { color: white; margin: 0 10px; text-decoration: none; cursor: pointer; }
 
 /* MODAL */
-.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); backdrop-filter: blur(3px); }
-.modal-content { background: white; margin: 10% auto; padding: 30px; border-radius: 15px; width: 85%; max-width: 500px; position: relative; }
+.modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); }
+.modal-content { background: white; margin: 15% auto; padding: 25px; border-radius: 12px; width: 80%; max-width: 450px; position: relative; }
 
 @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-/* Floating WhatsApp */
-.whatsapp-float { position: fixed; bottom: 30px; right: 25px; background: var(--whatsapp); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000; transition: 0.3s; }
-.whatsapp-float:hover { transform: scale(1.1) rotate(10deg); }
+.whatsapp-float { position: fixed; bottom: 30px; right: 25px; background: var(--whatsapp); width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 5px 15px rgba(0,0,0,0.3); z-index: 2000; transition: 0.3s; }
 </style>
 </head>
 <body>
 
 <div class="top-bar">
-  <span>📞 WhatsApp: 03195624640</span>
-  <span>✨ PREMIUM QUALITY - WORLDWIDE SHIPPING available</span>
+  <span>📞 03195624640</span>
+  <span>🚚 FREE DELIVERY ON ALL ORDERS</span>
 </div>
 
 <div class="header">
   <div class="store-name" onclick="filterCategory('all')">SARISH KANWAL</div>
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="Search for dresses, serums..." onkeyup="searchProduct()">
+    <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchProduct()">
     <button onclick="searchProduct()">Search</button>
   </div>
 </div>
 
 <div class="nav">
-  <a onclick="filterCategory('all')" class="active">All Collections</a>
+  <a onclick="filterCategory('all')" class="active">All</a>
   <a onclick="filterCategory('clothes')">Clothes</a>
   <a onclick="filterCategory('shoes')">Shoes</a>
   <a onclick="filterCategory('cosmetics')">Cosmetics</a>
@@ -86,11 +100,15 @@ footer { background: #1a1a1a; color: #999; padding: 40px 20px; text-align: cente
 
 <div class="container" id="productContainer">
   <div class="card" data-category="clothes">
+    <div class="discount-badge">0% OFF</div>
     <div class="img-container"><img src="product1.jpg" alt="Dress"></div>
     <div class="card-content">
-      <h3>Luxury Embroidered Chiffon Collection</h3>
-      <p class="price">Rs. 4,500</p>
-      <button class="buy-btn" onclick="buyProduct('Chiffon Collection - 4500')">ORDER NOW</button>
+      <h3>Premium Luxury Collection Dress</h3>
+      <div class="rating">★★★★★ <span class="sold-count">(150+ Sold)</span></div>
+      <p class="price">Rs. 3,500 <span class="old-price">Rs. 3,500</span></p>
+      <div class="stock-alert">🔥 Only 4 left in stock!</div>
+      <div class="stock-bar"><div class="stock-fill"></div></div>
+      <button class="buy-btn" onclick="buyProduct('Dress - 3500')">ORDER ON WHATSAPP</button>
     </div>
   </div>
 </div>
@@ -99,34 +117,33 @@ footer { background: #1a1a1a; color: #999; padding: 40px 20px; text-align: cente
     <div class="notif-flex">
         <div class="notif-icon">🛍️</div>
         <div class="notif-text">
-            <span id="notif-content"></span>
-            <span class="notif-time">Verified Order ✅</span>
+            <span id="notif-content"></span><br>
+            <small style="color:#999">Just now ✅</small>
         </div>
     </div>
 </div>
 
 <a href="https://wa.me/923195624640" class="whatsapp-float" target="_blank">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="35">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" width="30">
 </a>
 
 <footer>
-  <div class="footer-links" style="margin-bottom: 20px;">
+  <div class="footer-links" style="margin-bottom: 15px;">
     <a onclick="openModal('privacy')">Privacy Policy</a>
     <a onclick="openModal('contact')">Contact Us</a>
   </div>
-  <p>&copy; 2026 SARISH KANWAL Store. Serving worldwide with trust.</p>
-  <p style="font-size: 11px; color: #666;">Location: Pakistan, Punjab, Rahim Yar Khan</p>
+  <p>&copy; 2026 SARISH KANWAL Store.</p>
+  <p style="color: #666; font-size: 11px;">Pakistan, Punjab, Rahim Yar Khan</p>
 </footer>
 
 <div id="infoModal" class="modal">
   <div class="modal-content">
-    <span onclick="closeModal()" style="position:absolute; right:20px; top:15px; cursor:pointer; font-size:24px">&times;</span>
+    <span onclick="closeModal()" style="position:absolute; right:15px; top:10px; cursor:pointer; font-size:20px">&times;</span>
     <div id="modalBody"></div>
   </div>
 </div>
 
 <script>
-// --- FUZZY SEARCH ---
 function searchProduct() {
     let input = document.getElementById('searchInput').value.toLowerCase().trim();
     let cards = document.getElementsByClassName('card');
@@ -138,10 +155,6 @@ function searchProduct() {
 
 function filterCategory(cat) {
     let cards = document.getElementsByClassName('card');
-    document.querySelectorAll('.nav a').forEach(a => {
-        a.classList.remove('active');
-        if(a.innerText.toLowerCase().includes(cat)) a.classList.add('active');
-    });
     for (let i = 0; i < cards.length; i++) {
         let cardCat = cards[i].getAttribute('data-category');
         cards[i].style.display = (cat === 'all' || cardCat === cat) ? "" : "none";
@@ -152,35 +165,31 @@ function buyProduct(p) { window.open(`https://wa.me/923195624640?text=I want to 
 
 function openModal(t) {
     const b = document.getElementById('modalBody');
-    if(t=='privacy') b.innerHTML="<h2>Privacy Policy</h2><p>We process your orders securely. Your contact information is only used for shipping purposes.</p>";
-    else b.innerHTML="<h2>Contact Us</h2><p><b>WhatsApp:</b> 03195624640<br><b>Location:</b> Pakistan, Punjab, Rahim Yar Khan<br><b>Service:</b> 24/7 Available</p>";
+    if(t=='privacy') b.innerHTML="<h2>Privacy</h2><p>Your data is safe.</p>";
+    else b.innerHTML="<h2>Contact Us</h2><p>WhatsApp: 03195624640<br>Location: Pakistan, Punjab, Rahim Yar Khan</p>";
     document.getElementById('infoModal').style.display="block";
 }
 function closeModal() { document.getElementById('infoModal').style.display="none"; }
 
-// --- REAL-LOOKING GLOBAL ORDER NOTIFICATIONS ---
-const firstNames = ["Ahmed", "Sana", "Rajesh", "Priya", "John", "Fatima", "Arjun", "Zainab", "Ali", "Mehak", "Hamza", "Sneha", "Vikram", "Ayesha", "Omar", "Kiran", "Mustafa", "Anjali"];
-const lastNames = ["Khan", "Sharma", "Malik", "Patel", "Sheikh", "Verma", "Ahmed", "Gupta", "Javed", "Singh", "Shah", "Das"];
-const locations = ["Lahore, PK", "Mumbai, IN", "Dubai, UAE", "Karachi, PK", "Delhi, IN", "Islamabad, PK", "London, UK", "New York, USA", "Riyadh, SA", "Rahim Yar Khan, PK", "Faisalabad, PK", "Toronto, CA"];
-const prods = ["Luxury Bag", "Embroidered Suit", "Whitening Serum", "Party Shoes", "Designer Clutch"];
+// --- GLOBAL ORDER NOTIFICATIONS ---
+const fNames = ["Ahmed", "Sana", "Rajesh", "Fatima", "John", "Rahul", "Zainab", "Ali", "Mehak", "Vikram", "Ayesha", "Omar"];
+const lNames = ["Khan", "Sharma", "Malik", "Patel", "Sheikh", "Javed", "Singh", "Shah"];
+const locs = ["Lahore, PK", "Mumbai, IN", "Dubai, UAE", "Karachi, PK", "Delhi, IN", "Rahim Yar Khan, PK", "London, UK", "New York, USA"];
+const prods = ["Luxury Bag", "Embroidered Suit", "Whitening Serum", "Designer Clutch"];
 
 function showNotification() {
     const n = document.getElementById('order-notification');
     const content = document.getElementById('notif-content');
-    
-    const randomName = firstNames[Math.floor(Math.random()*firstNames.length)] + " " + lastNames[Math.floor(Math.random()*lastNames.length)];
-    const randomLoc = locations[Math.floor(Math.random()*locations.length)];
-    const randomProd = prods[Math.floor(Math.random()*prods.length)];
+    const name = fNames[Math.floor(Math.random()*fNames.length)] + " " + lNames[Math.floor(Math.random()*lNames.length)];
+    const loc = locs[Math.floor(Math.random()*locs.length)];
+    const prod = prods[Math.floor(Math.random()*prods.length)];
 
-    content.innerHTML = `<b>${randomName}</b> from <b>${randomLoc}</b> just purchased a <b>${randomProd}</b>`;
-    
+    content.innerHTML = `<b>${name}</b> from <b>${loc}</b> bought a <b>${prod}</b>`;
     n.style.display = "block";
     setTimeout(() => { n.style.display = "none"; }, 5000);
-    
-    // Repeat every 15-25 seconds
     setTimeout(showNotification, Math.random() * (25000 - 15000) + 15000);
 }
-setTimeout(showNotification, 4000); // Start after 4 seconds
+setTimeout(showNotification, 4000);
 </script>
 
 </body>
